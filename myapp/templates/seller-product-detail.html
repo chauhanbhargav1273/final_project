@@ -1,0 +1,57 @@
+{% extends 'seller-header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- title -->
+	<title>Single Product</title>
+</head>
+<body>
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<h1>PRODUCT DETAIL PAGE</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- single product -->
+	<div class="single-product mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="single-product-img">
+						<img src="{{products.product_image.url}}" alt="">
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="single-product-content">
+						<p><strong>{{products.product_category}}</strong></p>
+						<h2>{{products.product_name}}</h2>
+						<p><h4>{{products.product_desc}}</h4></p>
+						<p class="single-product-pricing"><span>Per Kg</span>₹ {{products.product_price}}</p>
+						
+						<div class="single-product-form">
+							<a href="{% url 'seller-edit-product' pk=products.pk %}" class="cart-btn"><i></i>Edit</a>
+							<a href="{% url 'seller-delete-product' pk=products.pk %}" class="cart-btn"><i></i>Delete</a>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end single product -->
+</body>
+</html>
+
+{% endblock %}

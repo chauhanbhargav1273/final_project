@@ -1,0 +1,65 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- title -->
+	<title>product detail</title>
+</head>
+<body>
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- single product -->
+	<div class="single-product mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+						<h2 class="breadcrumb-header" align="center">Product Detail</h2><br><br><br>
+				</div>
+				<div class="col-md-5">
+					<div class="single-product-img">
+						<img src="{{products.product_image.url}}" alt="">
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="single-product-content">
+						<p><strong>{{products.product_category}}</strong></p>
+						<h2>{{products.product_name}}</h2>
+						<p><h4>{{products.product_desc}}</h4></p>
+						<p class="single-product-pricing"><span>Per Kg</span>₹ {{products.product_price}}</p>
+						
+						<div class="single-product-form">
+							{% if cart_flag == True %}
+								<a href="{% url 'remove-from-cart' pk=products.pk %}" class="cart-btn"><i></i>Remove from Cart</a>
+							{% else %}
+								<a href="{% url 'add-to-cart' pk=products.pk %}" class="cart-btn"><i></i>Add To Cart</a>
+							{% endif %}
+							
+							{% if wishlist_flag == True %}
+								<a href="{% url 'remove-from-wishlist' pk=products.pk %}" class="cart-btn"><i></i>Remove from Wishlist</a>
+							{% else %}
+								<a href="{% url 'add-to-wishlist' pk=products.pk %}" class="cart-btn"><i></i>Add To Wishlist</a>
+							{% endif %}
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end single product -->
+</body>
+</html>
+
+{% endblock %}

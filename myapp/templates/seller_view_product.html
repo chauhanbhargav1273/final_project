@@ -1,0 +1,90 @@
+{% extends 'seller-header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Shop</title>
+</head>
+<body>
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<h1>VIEW PRODUCT PAGE</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- products -->
+	
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+
+			<div class="row">
+                <div class="col-md-12">
+                    <div class="product-filters">
+                        <ul>
+                        	<h3>Total Product({{products.count}})</h3><br>
+                            <li class="active"><a href="{% url 'seller-view-product' %}" style="color: black;">All</a></li>
+                            <li ><a href="{% url 'seller-view-vagetables' %}" style="color: black;"> Vagetables</a></li>
+                            <li ><a href="{% url 'seller-view-fruits' %}" style="color: black;">Fruits</a></li>
+                            <li ><a href="{% url 'seller-view-juice' %}" style="color: black;">Juice</a></li>
+                            <li ><a href="{% url 'seller-view-dried' %}" style="color: black;">dried</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="row product-lists">
+				{% for i in products %}
+				<div class="col-lg-4 col-md-6 text-center strawberry">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="single-product.html"><img src="{{i.product_image.url}}" alt="" width="250px" height="250px"></a>
+						</div>
+						<h3>{{i.product_category}}</h3>
+						<p ><h6>{{i.product_desc}}</h6></p>
+						<p class="product-price"><span>Per Kg</span>₹ {{i.product_price}}</p>
+						<a href="{% url 'seller-product-detail' pk=i.pk %}" class="cart-btn"> Product Detail</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<!-- end products -->
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/1.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/2.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/3.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/4.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/5.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end logo carousel -->
+</body>
+</html>
+{% endblock %}

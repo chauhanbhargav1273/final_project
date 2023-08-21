@@ -1,0 +1,147 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Shop</title>
+	<script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+	<!-- hero area -->
+	<div class="hero-area hero-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 offset-lg-2 text-center">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+							<p class="subtitle">Fresh & Organic</p>
+							<h1>Delicious Seasonal Fruits</h1>
+							<div class="hero-btns">
+								<a href="shop.html" class="boxed-btn">Fruit Collection</a>
+								<a href="contact.html" class="bordered-btn">Contact Us</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end hero area -->
+	<!-- products -->
+	
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+
+			<div class="row">
+                <div class="col-md-12">
+                    <div class="product-filters">
+                        <ul>
+                        	{% if carts %}
+                        		<h3>Total Products in Cart({{carts.count}})</h3><br>
+                        	{% else %}
+                        		<h3>No Product Cart</h3><br>
+                        	{% endif %}
+                            <li class="active" ><a href="{% url 'seller-view-product' %}" style="color: black;">All</a></li>
+                            <li ><a href="{% url 'seller-view-vagetables' %}" style="color: black;"> Vagetables</a></li>
+                            <li ><a href="{% url 'seller-view-fruits' %}" style="color: black;">Fruits</a></li>
+                            <li ><a href="{% url 'seller-view-juice' %}" style="color: black;">Juice</a></li>
+                            <li ><a href="{% url 'seller-view-dried' %}" style="color: black;">dried</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="row product-lists">
+				{% for i in carts %}
+				<div class="col-lg-4 col-md-6 text-center strawberry">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="single-product.html"><img src="{{i.products.product_image.url}}" alt="" width="250px" height="250px"></a>
+						</div>
+						<h3>{{i.products.product_category}}</h3>
+						<p ><h6>{{i.products.product_desc}}</h6></p>
+						<p class="product-price"><span>Per Kg</span>₹ {{i.products.product_price}}</p>
+						<form method="post" action="{% url 'change-qty' %}">
+							{% csrf_token %}
+								<input type="hidden" name="pk" value="{{i.pk}}">
+								<h4 class="product-price">product qty :</h4><input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit();">
+						</form>
+						<h4 class="product-price">total price : {{i.total_price}} <del class="product-old-price"></del></h4>
+						<a href="{% url 'product-detail' pk=i.products.pk %}" class="cart-btn"> Product Detail</a>
+
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<h1>Net Price : {{net_price}}</h1>
+			<form method="post">
+
+                    <input type="hidden" id="net_price" name="amount" value="{{net_price}}">
+                    <button type="button" class="btn btn-lg btn-primary" id="checkout-button">Checkout</button>
+            </form>
+		</div>
+	</div>
+	<!-- end products -->
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/1.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/2.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/3.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/4.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/5.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end logo carousel -->
+	<script type="text/javascript">
+    var stripe = Stripe('pk_test_51Ndp0ISIbHewdUiVwYeu9lTQjsqQm3lUYi6dMOYIw8qslhSvZGCVGkV5FPm2JsQPJfoejsaJkvAxqOiKFRyhBtLI00niRTQfOX');
+    var checkoutButton = document.getElementById('checkout-button');
+
+    checkoutButton.addEventListener('click', function() { 
+    	alert("Hello");
+        fetch('/create-checkout-session/', {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: JSON.stringify({'post_data':'{{net_price}}'})
+    })
+	 .then(function(response) {
+	 return response.json();
+	 })
+	 .then(function(session) {
+	 return stripe.redirectToCheckout({ sessionId: session.id });
+	 })
+	 .then(function(result) {
+	 // If `redirectToCheckout` fails due to a browser or network
+	 // error, you should display the localized error message to your
+	 // customer using `error.message`.
+	 if (result.error) {
+	 alert(result.error.message);
+	 }
+	 })
+	 .catch(function(error) {
+	 console.error('Error:', error);
+	 });
+	 });
+ </script>
+</body>
+</html>
+{% endblock %}
