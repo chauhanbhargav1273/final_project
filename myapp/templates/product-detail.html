@@ -42,13 +42,21 @@
 							{% if cart_flag == True %}
 								<a href="{% url 'remove-from-cart' pk=products.pk %}" class="cart-btn"><i></i>Remove from Cart</a>
 							{% else %}
+							{% if request.session.email %}
 								<a href="{% url 'add-to-cart' pk=products.pk %}" class="cart-btn"><i></i>Add To Cart</a>
+							{% else %}
+								<a href="{% url 'login' %}" class="cart-btn"><i></i>Add To Cart</a>
+							{% endif %}
 							{% endif %}
 							
 							{% if wishlist_flag == True %}
 								<a href="{% url 'remove-from-wishlist' pk=products.pk %}" class="cart-btn"><i></i>Remove from Wishlist</a>
 							{% else %}
+							{% if request.session.email %}
 								<a href="{% url 'add-to-wishlist' pk=products.pk %}" class="cart-btn"><i></i>Add To Wishlist</a>
+							{% else %}
+								<a href="{% url 'login' %}" class="cart-btn"><i></i>Add To Wishlist</a>
+							{% endif %}
 							{% endif %}
 							
 						</div>
