@@ -78,6 +78,7 @@ h1, .h1 {
     font-size: 3rem;
     line-height: 3.25rem;
   }
+  
 }
 
 @media only screen and (max-width: 575.96px) {
@@ -2262,8 +2263,8 @@ ul.social-link-team li a {
   line-height: 1.8;
 }
 
-.contact-form form p input[type=text], .contact-form form p input[type=tel], .contact-form form p input[type=email] {
-  width: 49%;
+.contact-form form p input[type=text], .contact-form form p input[type=tel], .contact-form form p input[type=email],.contact-form form p input[type=password],.contact-form form p input[type=file] {
+  width: 100%;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -2277,6 +2278,7 @@ ul.social-link-team li a {
   width: 100%;
   resize: none;
 }
+
 
 .contact-form-wrap {
   background-color: #FBFBFB;

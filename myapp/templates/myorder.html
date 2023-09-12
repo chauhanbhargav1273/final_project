@@ -55,18 +55,14 @@
 				<div class="col-lg-4 col-md-6 text-center strawberry">
 					<div class="single-product-item">
 						<div class="product-image">
-							<a href="single-product.html"><img src="{{i.products.product_image.url}}" alt="" width="250px" height="250px"></a>
+							<a><img src="{{i.products.product_image.url}}" alt="" width="250px" height="250px"></a>
 						</div>
 						<h3>{{i.products.product_category}}</h3>
 						<p ><h6>{{i.products.product_desc}}</h6></p>
 						<p class="product-price"><span>Per Kg</span>₹ {{i.products.product_price}}</p>
-						<form method="post" action="{% url 'change-qty' %}">
-							{% csrf_token %}
-								<input type="hidden" name="pk" value="{{i.pk}}">
-								<h4 class="product-price">product qty :</h4><input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit();">
-						</form>
-						<h4 class="product-price">total price : {{i.total_price}} <del class="product-old-price"></del></h4>
-						<a href="{% url 'product-detail' pk=i.products.pk %}" class="cart-btn"> Product Detail</a>
+							<h4 class="product-price">product qty :  {{i.product_qty}} </h4><br>
+							<h4 class="product-price">total price : {{i.total_price}} <del class="product-old-price"></del></h4>
+						
 
 					</div>
 				</div>

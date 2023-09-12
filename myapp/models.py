@@ -15,7 +15,15 @@ class user(models.Model):
 	def __str__(self):
 		return self.fname
 
+class Contact(models.Model):
+	name=models.CharField(max_length=100)
+	email=models.EmailField()
+	phone=models.PositiveIntegerField()
+	subject=models.CharField(max_length=100)
+	message=models.CharField(max_length=100)
 
+	def __str__(self):
+		return self.name
 
 class product(models.Model):
 	seller=models.ForeignKey(user,on_delete=models.CASCADE)

@@ -36,7 +36,7 @@
 						<form  method="POST" action="{% url 'signup' %}" align=center enctype="multipart/form-data">
 							{% csrf_token %}
 							<p>
-								<select class="w-50 py-3 px-3 border" name="usertype">
+								<select class="w-100 py-3 px-3 border" name="usertype">
 									<option>----select user----</option>
 									<option value="buyer">Buyer</option>
 									<option value="seller">Seller</option>
@@ -61,13 +61,13 @@
 								<input type="text" placeholder="Address" name="address" >
 							</p>
 							<p>
-								<input type="password"  placeholder="Password" name="password" class="w-50 py-3 px-3 border">
+								<input type="password"  placeholder="Password" name="password" >
 							</p>
 							<p>
-								<input type="password" placeholder="Confirm Password" name="cpassword" class="w-50 py-3 px-3 border">
+								<input type="password" placeholder="Confirm Password" name="cpassword">
 							</p>
 							<p>
-								<input type="file" name="profile_pic" class="w-50 py-3 px-3 border">
+								<input type="file" name="profile_pic" >
 							</p>
 							<p>
 								<br><input type="submit" value="Signup">

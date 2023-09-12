@@ -8,6 +8,7 @@ urlpatterns = [
     path('about/',views.about,name='about'),
     path('single-news/',views.single_news,name='single-news'),
     path('seller-index',views.seller_index,name='seller-index'),
+    path('single-product/<int:pk>/',views.single_product,name='single-product'),
     path('contact/',views.contact,name='contact'),
     path('signup/',views.signup,name='signup'),
     path('login/',views.login,name='login'),
@@ -17,6 +18,12 @@ urlpatterns = [
     path('verify-otp/',views.verify_otp,name='verify-otp'),
     path('new-password/',views.new_password,name='new-password'),
     path('profile/',views.profile,name='profile'),
+    path('view-vagetables',views.view_vagetables,name='view-vagetables'),
+    path('view-fruits',views.view_fruits,name='view-fruits'),
+    path('view-vagetables',views.view_vagetables,name='view-vagetables'),
+    path('view-juice',views.view_juice,name='view-juice'),
+    path('view-dried',views.view_dried,name='view-dried'),
+
 
 
     path('seller-add-product/',views.seller_add_product,name='seller-add-product'),

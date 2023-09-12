@@ -114,7 +114,6 @@
     var checkoutButton = document.getElementById('checkout-button');
 
     checkoutButton.addEventListener('click', function() { 
-    	alert("Hello");
         fetch('/create-checkout-session/', {
         method: 'POST',
         headers:{

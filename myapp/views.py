@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import user,product,Wishlist,Cart
+from .models import user,product,Wishlist,Cart,Contact
 import requests
 import random
 import stripe
@@ -95,7 +95,6 @@ def index(request):
 		return render(request,'index.html',{'products':products})
 
 def seller_index(request):
-	products=product.objects.all()
 	seller=user.objects.get(email=request.session['email'])
 	products=product.objects.filter(seller=seller)
 	return render(request,'seller-index.html',{'products':products})
@@ -109,12 +108,51 @@ def about(request):
 def single_news(request):
 	return render(request,'single-news.html')
 
+def single_product(request,pk):
+	wishlist_flag=False
+	cart_flag=False
+	products=product.objects.get(pk=pk)
+	try:
+		users=user.objects.get(email=request.session['email'])
+		try:
+			Wishlist.objects.get(users=users,products=products)
+			wishlist_flag=True
+		except:
+			pass
+		try:
+			Cart.objects.get(users=users,products=products)
+			cart_flag=True
+		except:
+			pass
+	except:
+		pass
+				
+
+	return render(request,'single-product.html',{'products':products,'wishlist_flag':wishlist_flag,'cart_flag':cart_flag})
+
+
 def shop(request):
 	products=product.objects.all()
 	return render(request,'shop.html',{'products':products})
 
 def contact(request):
-	return render(request,'contact.html')
+	if request.method=="POST":
+		try:
+			Contact.objects.get(email=request.POST['email'])
+			msg="already exists"
+			return render(request,'contact.html',{'msg':msg})
+		except:
+			Contact.objects.create(
+				name=request.POST['name'],
+				email=request.POST['email'],
+				phone=request.POST['phone'],
+				subject=request.POST['subject'],
+				message=request.POST['message']
+				)
+			msg="contact saved sucessfully"
+			return render(request,'contact.html',{'msg':msg})
+	else:
+		return render(request,'contact.html')
 
 def signup(request):
 	if request.method=="POST":
@@ -288,7 +326,25 @@ def profile(request):
 		else:
 			return render(request,'seller-profile.html',{'users':users})
 
+def view_vagetables(request):
+	users=user.objects.get(email=request.session['email'])
+	products=product.objects.filter(product_category="vagetables")
+	return render(request,'index.html',{'products':products})
 
+def view_fruits(request):
+	users=user.objects.get(email=request.session['email'])
+	products=product.objects.filter(product_category="fruits")
+	return render(request,'index.html',{'products':products})
+
+def view_juice(request):
+	users=user.objects.get(email=request.session['email'])
+	products=product.objects.filter(product_category="juice")
+	return render(request,'index.html',{'products':products})
+
+def view_dried(request):
+	users=user.objects.get(email=request.session['email'])
+	products=product.objects.filter(product_category="dried")
+	return render(request,'index.html',{'products':products})
 
 def seller_add_product(request):
 	seller=user.objects.get(email=request.session['email'])
